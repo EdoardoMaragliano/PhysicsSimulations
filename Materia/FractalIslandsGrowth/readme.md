@@ -1,5 +1,12 @@
 ### Lattice Growth Simulation
 
+## Contents
+
+1. [Main](#main)
+2. [Reticolo class](#reticolo)
+3. [Island class](#island)
+
+## Main
 #### Overview
 This simulation code models the growth dynamics of a lattice system using the `Reticolo` class. It incorporates processes such as diffusion and deposition to mimic real-world phenomena, enabling the study of various physical systems.
 
@@ -87,7 +94,6 @@ This class contains an implementation of an algorithm to count the number of isl
 3. [Usage](#usage)
 4. [Algorithm Overview](#algorithm-overview)
 5. [Example](#example)
-6. [License](#license)
 
 ## Introduction
 
