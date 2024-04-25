@@ -38,14 +38,20 @@ int main(int argc, char **argv){
 	double BetaJ=3.5;
 	int dyn=1;
 	cout << "argc="<<argc<<endl;
-/*	if(argc!=1){
-		int L=atoi(argv[1]);
-		double theta=atoi(argv[2]);
-		int N_mcs = atoi(argv[3]);
-		double BetaJ = atoi(argv[4]);
-		int dyn=atoi(argv[5]);
+	if(argc!=1){
+		L=atof(argv[1]);
+		theta=atof(argv[2]);
+		N_mcs = atof(argv[3]);
+		BetaJ = atof(argv[4]);
+		dyn=atof(argv[5]);
 	}
-	*/
+	cout << "pars set to " << endl;
+	cout << L << endl;
+	cout << theta << endl;
+	cout << N_mcs << endl;
+	cout << BetaJ << endl;
+	cout << dyn << endl;
+	
 
 /* con L=128 ci mette tantissimo, ridurre frequenza di stampa
 	con L=64 e seed(time(0)) servono un po' più di 200k MCS per avere convergenza
