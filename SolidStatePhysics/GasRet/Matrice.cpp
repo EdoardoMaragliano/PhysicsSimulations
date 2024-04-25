@@ -215,7 +215,7 @@ void Matrice::ComputeParOrdine(){
 					N_B++;
 			}
 		}
-		m_p=(N_A-N_B)/(N_A+N_B);
+		m_p=(N_A-N_B)/m_Npart;
 	}	
 }
 

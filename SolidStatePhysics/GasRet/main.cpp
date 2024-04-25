@@ -20,8 +20,8 @@
 using namespace std;
 
 //ALCUNE FUNZIONI
-int approx(float a){				//non trovavo una funzione che approssimasse alla parte
-	float appo= a-int(a);			//intera piu' vicina cosi' l'ho scritta
+int approx(float a){				
+	float appo= a-int(a);			
 	if(appo<0.5)
 		return floor(a);
 	else
@@ -34,8 +34,8 @@ int main(int argc, char **argv){
 
 	int L=64;
 	double theta=0.5; //riempimento percentuale
-	int N_mcs=150000;
-	double BetaJ=5.0;
+	int N_mcs=250000;
+	double BetaJ=3.5;
 	int dyn=1;
 	cout << "argc="<<argc<<endl;
 /*	if(argc!=1){
@@ -48,7 +48,7 @@ int main(int argc, char **argv){
 	*/
 
 /* con L=128 ci mette tantissimo, ridurre frequenza di stampa
-	con L=64 e seed(time(0)) servono un po' più di 100k MCS per avere convergenza
+	con L=64 e seed(time(0)) servono un po' più di 200k MCS per avere convergenza
 	*/
 
 	int spostamenti=0;	//contatore
