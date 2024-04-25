@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from math import *
-from ROOT import *
+from ROOT import TRandom3, TFile, TH1D, gApplication, TVector3, TLorentzVector, TMath 
 
 rnd = TRandom3();
 

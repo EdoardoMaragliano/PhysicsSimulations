@@ -3,7 +3,9 @@
         "GausMult.C": "cpp",
         "MCtest.C": "cpp",
         "Veto.C": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "scala.C": "cpp",
+        "plot_m.C": "cpp"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }
