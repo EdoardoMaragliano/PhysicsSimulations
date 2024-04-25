@@ -3,8 +3,8 @@
 ## Contents
 
 1. [Main](#main)
-2. [Reticolo class](#reticolo)
-3. [Island class](#island)
+2. [Reticolo class](#reticolo-class)
+3. [Island class](#islands-class)
 
 ## Main
 #### Overview
