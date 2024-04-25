@@ -1,4 +1,4 @@
-### Lattice Growth Simulation (Updated May 26, 2021)
+### Lattice Growth Simulation
 
 #### Overview
 This simulation code models the growth dynamics of a lattice system using the `Reticolo` class. It incorporates processes such as diffusion and deposition to mimic real-world phenomena, enabling the study of various physical systems.
@@ -32,10 +32,6 @@ This command executes the simulation with a `D/F` ratio of 1000.
 #### Dependencies
 - ROOT libraries for visualization (`TRandom3.h`, `TGraph.h`, `TApplication.h`, etc.).
 - `Reticolo.hpp` header file defining the `Reticolo` class for lattice operations.
-
-#### Note
-This simulation code provides a flexible framework for studying lattice growth dynamics and can be easily extended to incorporate additional features or optimizations.
-
 
 # Reticolo Class 
 
@@ -80,9 +76,9 @@ The `Reticolo` class represents a lattice structure used for modeling various ph
 #### Note
 This version of the `Reticolo` class is designed to provide enhanced functionality for simulating lattice-based systems with improved accuracy and flexibility.
 
-# Island Counting Algorithm using Depth-First Search (DFS)
+# Islands class
 
-This repository contains an implementation of an algorithm to count the number of islands in a given boolean 2D matrix. An "island" here refers to a group of adjacent cells containing '1's (indicating land), where adjacency includes horizontally, vertically, and diagonally neighboring cells.
+This class contains an implementation of an algorithm to count the number of islands in a given boolean 2D matrix. An "island" here refers to a group of adjacent cells containing '1's (indicating land), where adjacency includes horizontally, vertically, and diagonally neighboring cells.
 
 ## Contents
 
@@ -96,10 +92,6 @@ This repository contains an implementation of an algorithm to count the number o
 ## Introduction
 
 The provided code implements the algorithm to count islands in a given boolean 2D matrix. It utilizes Depth-First Search (DFS) to explore connected cells within the matrix and identify separate islands.
-
-## Dependencies
-
-The code is written in C++ and does not have any external dependencies.
 
 ## Usage
 
