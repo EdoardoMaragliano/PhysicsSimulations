@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from math  import *
-from ROOT  import *
+from ROOT  import TRandom3, TLorentzVector, TVector3, TFile, TH1D, TCanvas, TMath, TGenPhaseSpace, gApplication
 
 rnd = TRandom3()
 cx = TCanvas("cx","",5,5,400,400)

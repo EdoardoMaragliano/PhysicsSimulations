@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "GausMult.C": "cpp",
+        "MCtest.C": "cpp",
+        "Veto.C": "cpp",
+        "string": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
+}
