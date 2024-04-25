@@ -29,14 +29,14 @@ using namespace std;
 class Reticolo{
 	
 	public:
-		Reticolo(int rows=10, int cols=10, double piene=0):m_rows(rows),m_cols(cols),m_Npart(piene){
+		Reticolo(int rows=10, int cols=10, double filled=0):m_rows(rows),m_cols(cols),m_Npart(filled){
 			m_Npart=0;
 			m_rand.SetSeed(time(0));
 			
 			cout << endl<< "created matrix "<< m_rows << " x " << m_rows << endl;
 			cout << "random variables set"	<<endl;
 			this->Init();
-			this->RandomFill(piene);
+			this->RandomFill(filled);
 			cout << "matrix filled with " << m_Npart << "particles" << endl;
 		};
 
@@ -54,7 +54,7 @@ class Reticolo{
 		void CreaClassi();			//divides points into classes depending on first neighbors
 		void Crescita(double,double, double, double, double); //random growth MC algorithm
 
-		int NBounds(int, int );		//diven a position, counts the bonds
+		int NBounds(int, int );		//given a position, counts the bonds
 		int ContaParticelle();		//counts the filled places of the lattice
 		int GetNPart();				//gives the value of the prv member m_nPart
 		

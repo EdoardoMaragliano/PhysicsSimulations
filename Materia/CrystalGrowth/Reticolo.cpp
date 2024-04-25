@@ -241,8 +241,6 @@ void Reticolo::Deposizione(){
 	}
 	m_matr[x][y]=true;					//when out of the while loop(thus the site is empty), fill it
 	m_Npart++;							//update the counter of m_Npart
-	cout << "new part deposed, nPart=" <<m_Npart<< endl;
-
 }
 
 void Reticolo::RandomFill(int Nfilled){		//randomly fills the lattice until Nfilled sites are filled

@@ -36,8 +36,8 @@ using namespace std;
 	TRandom3 rnd;
 
 //ALCUNE FUNZIONI
-int approx(float a){				//non trovavo una funzione che approssimasse alla parte
-	float appo= a-int(a);			//intera piu' vicina cosi' l'ho scritta
+int approx(float a){				
+	float appo= a-int(a);			
 	if(appo<0.5)
 		return floor(a);
 	else
