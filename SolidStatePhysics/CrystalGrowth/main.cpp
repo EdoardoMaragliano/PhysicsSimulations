@@ -16,7 +16,7 @@
 #include "TH2I.h"
 #include <unistd.h>
 
-#include "Reticolo.hpp"
+#include "Lattice.hpp"
 
 using namespace std;
 
@@ -32,10 +32,10 @@ using namespace std;
 	double Eb=0.2*11604; //eV->K 		//binding energy
 	double F=1./60;						//deposition flux (particles per sec per site)
 
-	double pDep=double(M)*F;	//peso della deposizione costante
+	double pDep=double(M)*F;	//deposition probability
 	TRandom3 rnd;
 
-//ALCUNE FUNZIONI
+//approximation function
 int approx(float a){				
 	float appo= a-int(a);			
 	if(appo<0.5)
@@ -45,7 +45,7 @@ int approx(float a){
 }
 
 
-//MAIN
+//main
 int main(int argc, char **argv){
 
 	int N_max = approx(M*theta); 				//max number of filled sites
@@ -56,39 +56,39 @@ int main(int argc, char **argv){
 	
     gStyle->SetOptStat(0);
 
-	Reticolo matrice(L,L,2);						//creates a lattice LxL with n particles
+	Lattice matrix(L,L,2);						//creates a lattice LxL with n particles
 	
 	//Graphics
 	TCanvas can_dyn;
 	can_dyn.SetTitle("Evolution");
 	cout << "loading dynamical evolution of the system" << endl;
-	matrice.PrintGr(grEvol);
+	matrix.PrintGr(grEvol);
 	grEvol.SetTitle("Temporal evolution:step 0");
 	grEvol.Draw("COL");
-	matrice.PrintGr(grEvol);
+	matrix.PrintGr(grEvol);
 
 
-	int conta=0;									//counter for the graph printing
-	while(matrice.GetNPart()<N_max){				//while number of particles does not exceed the max fillment
+	int counter=0;									//counter for the graph printing
+	while(matrix.GetNPart()<N_max){				//while number of particles does not exceed the max fillment
 
-		//deposizione oppure diffusione -> estraggo una classe 0 1 2 3 4
-		//se diffusione estraggo unif in 1-n_mosse(C) e scelgo la mossa corrispondente
-		//se deposizione matrice.Deposition()
-		matrice.CreaClassi();						//divides the sites in classes according to #FN
-		matrice.Crescita(nu,T, E0, Eb, pDep);		//growth algorithm: diffusion or deposition
+		//deposition or diffusion -> draw a class 0 1 2 3 4
+		//if diffusion draw unif in 1-n_mosse(C) and pick the corresponding move
+		//if deposition matrix.Deposition()
+		matrix.CreateClasses();						//divides the sites in classes according to #FN
+		matrix.Growth(nu,T, E0, Eb, pDep);		//growth algorithm: diffusion or deposition
 		
-		if(conta%100==0){							//updates the graph every 100 steps
-			matrice.PrintGr(grEvol);
-			string title="Evoluzione Temporale: step "+to_string(conta);
+		if(counter%100==0){							//updates the graph every 100 steps
+			matrix.PrintGr(grEvol);
+			string title="Evoluzione Temporale: step "+to_string(counter);
 			grEvol.SetTitle(title.c_str());
 		}
 
-		//cout << matrice.GetNPart()<< "\t" << matrice.ContaParticelle()<<endl;
-		++conta;
+		//cout << matrix.GetNPart()<< "\t" << matrix.CountNParticles()<<endl;
+		++counter;
 	}
-	cout << "n iterations="<<conta<<endl;
-	matrice.PrintGr(grEvol);
-	cout << matrice.GetNPart()<< "\t" << matrice.ContaParticelle()<<endl;
+	cout << "n iterations="<<counter<<endl;
+	matrix.PrintGr(grEvol);
+	cout << matrix.GetNPart()<< "\t" << matrix.CountNparticles()<<endl;
 	cout <<"app.Run(true)"<< endl;
 	app.Run(true);
 

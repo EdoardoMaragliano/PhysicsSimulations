@@ -18,14 +18,14 @@ USO UN SOLO GENERATORE CON SEME INIZIALIZZATO A TIME(0)*/
 #include <unistd.h>
 #include "TH2I.h"
 
-#include "Reticolo.hpp"
+#include "Lattice.hpp"
 
 
 using namespace std;
 
 //PRINTERS
 
-void Reticolo::Print(){
+void Lattice::Print(){
 	for(int i=0;i<m_rows;i++){
 		for(int j=0;j<m_cols;j++){
 			cout << m_matr[i][j] << " ";
@@ -34,7 +34,7 @@ void Reticolo::Print(){
 	}
 }
 
-void Reticolo::Print(string nomefile){
+void Lattice::Print(string nomefile){
 	ofstream fout(nomefile);
 	for(int i=0;i<m_rows;i++){
 		for(int j=0;j<m_cols;j++){ 
@@ -46,7 +46,7 @@ void Reticolo::Print(string nomefile){
 }
 
 
-void Reticolo::PrintGr(TH2I &grP){			//fills and prints the graph
+void Lattice::PrintGr(TH2I &grP){			//fills and prints the graph
 
 	grP.Reset();
 			
@@ -60,7 +60,7 @@ void Reticolo::PrintGr(TH2I &grP){			//fills and prints the graph
 	gPad->Modified(); gPad->Update(); gSystem->ProcessEvents(); 
 }
 
-void Reticolo::Init(){
+void Lattice::Init(){
   
     // Inserting elements into vector 
     for (int i = 0; i < m_rows; i++) { 
@@ -75,7 +75,7 @@ void Reticolo::Init(){
 	cout << "Lattice initialized to 0" << endl;
 }
 
-int Reticolo::ContaParticelle(){
+int Lattice::CountNparticles(){
 	int conta=0;
 	for(int i=0;i<m_rows;i++){
 		for(int j=0;j<m_cols;j++){
@@ -88,7 +88,7 @@ int Reticolo::ContaParticelle(){
 
 
 
-int Reticolo::NBounds(int x, int y){
+int Lattice::NBounds(int x, int y){
 	int N=0; //do per scontato che x,y sia un sito pieno
 
 	int nx=x+1,ny=y+1,px=x-1,py=y-1;
@@ -113,9 +113,9 @@ int Reticolo::NBounds(int x, int y){
 	return N;
 }
 
-void Reticolo::CreaClassi(){
+void Lattice::CreateClasses(){
 	for(int cl=0;cl<4;++cl)								//each time I call the method 
-		m_classi[cl].clear();							//I clean the classes
+		m_classes[cl].clear();							//I clean the classes
 
 	for(int i=0;i<m_rows;i++){							//loop on the lattice
 		for(int j=0;j<m_cols;j++){
@@ -123,27 +123,27 @@ void Reticolo::CreaClassi(){
 				vector<int> appo={i,j};					//save the coords of the site
 				for(int cl=0;cl<4;++cl){	
 					if(NBounds(i,j)==cl){				//if it has cl bonds		
-						m_classi[cl].push_back(appo);	//save the site in the cl-bonds class	
+						m_classes[cl].push_back(appo);	//save the site in the cl-bonds class	
 					}	
 				}	
 			}
 			/*else{
 				vector<int> appo2={i,j};					//salvo le coordinate del sito
-				m_classi[4].push_back(appo2);
+				m_classes[4].push_back(appo2);
 			}*/
 		}
 	}
 	/*cout << "processi divisi in classi" << endl;
 	for(int i=0;i<5;++i)
-		cout << "dim classe " << i << "=" << m_classi[i].size() << endl;	*/
+		cout << "dim classe " << i << "=" << m_classes[i].size() << endl;	*/
 }
 
-void Reticolo::Crescita(double nu, double T, double E0, double Eb, double pDep){
+void Lattice::Growth(double nu, double T, double E0, double Eb, double pDep){
 
 	vector<double> p;													//each diffusion class has a weight p[i]
 	for(int i=0;i<4;++i){												//loop on the 4 diffusion classes
-		p.push_back(m_classi[i].size()*(4-i)*nu*exp(-(E0+i*Eb)/T));		
-		//cout <<	"classe"<<i<<"=" <<m_classi[i].size() << endl;
+		p.push_back(m_classes[i].size()*(4-i)*nu*exp(-(E0+i*Eb)/T));		
+		//cout <<	"classe"<<i<<"=" <<m_classes[i].size() << endl;
 	}			
 	p.push_back(pDep);											
 	//cout << "p size=" << p.size() << endl;						//deposition weight is contant
@@ -172,21 +172,21 @@ void Reticolo::Crescita(double nu, double T, double E0, double Eb, double pDep){
 
 	//random choice of the move among possible moves of the chosen class
 	if(c<4){ 										//if the process is diffusive
-		int k=m_rand.Integer(m_classi[c].size());	//picks a rnd integer between 0 and the size of the chosen
+		int k=m_rand.Integer(m_classes[c].size());	//picks a rnd integer between 0 and the size of the chosen
 
-		//cout << "c="<<c << "classi[c].size()="<<m_classi[c].size() << endl;
+		//cout << "c="<<c << "classi[c].size()="<<m_classes[c].size() << endl;
 		//cout << "processo k=" << k << endl;
 
-		int x=m_classi[c][k][0];					//the number labels a particular element of the class(thus a lattice site)
-		int y=m_classi[c][k][1];					//saves the x and y coord of the site
-		this->Diffusione(x,y);						//makes a diffusion move from the site
+		int x=m_classes[c][k][0];					//the number labels a particular element of the class(thus a lattice site)
+		int y=m_classes[c][k][1];					//saves the x and y coord of the site
+		this->Diffusion(x,y);						//makes a diffusion move from the site
 	}
 	else{
-		this->Deposizione();						//deposition process
+		this->Deposition();						//deposition process
 	}
 }
 
-void Reticolo::Diffusione(int x, int y){			//algorithm for the diffusion process
+void Lattice::Diffusion(int x, int y){			//algorithm for the diffusion process
 
 	//0 su 1 dx 2 giu 3 sx
 	
@@ -229,10 +229,10 @@ void Reticolo::Diffusione(int x, int y){			//algorithm for the diffusion process
 			}		
 		}
 	}
-	//cout << "diffusione effettuata" << endl;
+	//cout << "Diffusion effettuata" << endl;
 }
 
-void Reticolo::Deposizione(){
+void Lattice::Deposition(){
 	int x=m_rand.Integer(m_rows); 							//randomly picks a site	
 	int y=m_rand.Integer(m_cols);
 	while(m_matr[x][y]==true){								//while the picked site is filled
@@ -243,7 +243,7 @@ void Reticolo::Deposizione(){
 	m_Npart++;							//update the counter of m_Npart
 }
 
-void Reticolo::RandomFill(int Nfilled){		//randomly fills the lattice until Nfilled sites are filled
+void Lattice::RandomFill(int Nfilled){		//randomly fills the lattice until Nfilled sites are filled
 	int conta=0;
 	int x=0, y=0;
 	
@@ -260,7 +260,7 @@ void Reticolo::RandomFill(int Nfilled){		//randomly fills the lattice until Nfil
 	cout << "lattice correctly filled, nPart="<< m_Npart << endl;
 }
 
-void Reticolo::ComputeParOrdine(){
+void Lattice::ComputeOrderPar(){
 	float N_A=0, N_B=0;
 	//fisso la riga
 	for(int i=0;i<m_rows;i++){
@@ -280,18 +280,18 @@ void Reticolo::ComputeParOrdine(){
 
 //GETTERS
 
-vector<vector<bool>> Reticolo::GetMatrix(){
+vector<vector<bool>> Lattice::GetMatrix(){
 	return m_matr;
 }
 
-int Reticolo::GetNPart(){
+int Lattice::GetNPart(){
 	return m_Npart;
 }
 
-double Reticolo::GetParOrdine(){
+double Lattice::GetOrderPar(){
 	return m_p;
 }
 
-vector<vector<int>>* Reticolo::GetClassi(){
-	return m_classi;
+vector<vector<int>>* Lattice::GetClasses(){
+	return m_classes;
 }
